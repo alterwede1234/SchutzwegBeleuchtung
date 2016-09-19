@@ -61,6 +61,7 @@
             android:layout_height="wrap_content"
             android:text="Daten Abfragen"
             android:id="@+id/button5" android:layout_centerVertical="true" android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" android:enabled="true" android:clickable="true"/>
+            android:layout_alignParentEnd="true" android:enabled="true" android:clickable="true"
+            android:onClick="Datenabfrage"/>
 
 </RelativeLayout>

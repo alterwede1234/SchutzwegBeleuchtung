@@ -10,7 +10,7 @@
     <string name="berechnung_button_text">Vorschlag berechnen</string>
     <string name="url_zu_datenblatt">https://www.swarco.com/futurit/Produkte/Beleuchtung/Produkte/AREDO/AREDO-L10#tab-58684</string>
     <string name="link_text">Datenblatt anzeigen</string>
-    <string name="db_path">/data/data/SchutwegBeleuchtung/databases/</string>
+    <string name="db_path">/data/data/com.wedenik.fabian.schutwegbeleuchtung/databases/</string>
     <string name="db_name">probedatenbank</string>
 
 

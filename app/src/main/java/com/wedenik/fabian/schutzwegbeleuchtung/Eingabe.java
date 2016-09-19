@@ -3,11 +3,16 @@ package com.wedenik.fabian.schutzwegbeleuchtung;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -37,20 +42,36 @@ public class Eingabe extends AppCompatActivity {
         startActivity(intent1);
     }
 
-    public String[] Datenabfrage() {
-        public String[] spinner_eintraege() {
-            String Tabellen_Name="probedatenbank";
-            String selectQuery="SELECT * FROM " + Tabellen_Name;
-                SQLiteDatabase db = DataBaseHelper.this.openDatabase();
-            Cursor cursor = db.rawQuery(selectQuery,  null);
-                String[] data = null;
-            if(cursor.moveToFirst()) {
-                do {
-                    // get the data into array or class variable
-                } while (cursor.moveToNext());
-            }
-            db.close();
-            return data;
+    public void Datenabfrage(View view) {
+        DataBaseHelper myDbHelper = new DataBaseHelper(getApplicationContext());
+        myDbHelper = new DataBaseHelper(this);
+        String Tabellen_Name="probedatenbank";
+        String selectQuery="SELECT * FROM " + Tabellen_Name;
+        SQLiteDatabase db = myDbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        List<String> datalist = new ArrayList<String>();
+        if(cursor.moveToFirst()) {
+            do {
+                String Land = cursor.getString(2);
+                datalist.add(Land);
+            } while (cursor.moveToNext());
         }
+        Set<String> hs = new HashSet<>();
+        hs.addAll(datalist);
+        datalist.clear();
+        datalist.addAll(hs);
+        String[] data = new String[datalist.size()];
+        datalist.toArray(data);
+        cursor.close();
+        db.close();
+
+        //String MY_PREFS_NAME = "MzPrefsFile";
+       // SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+       // editor.putStringSet("Laender", hs);
+       // editor.apply();
+
+        Spinner Laenderwahl = (Spinner) findViewById(R.id.Laenderwahl);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
+        Laenderwahl.setAdapter(adapter);
     }
 }
