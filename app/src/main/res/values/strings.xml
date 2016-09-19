@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Schutzweg Beleuchtung</string>
+    <string name="country_prompt_de">Wählen Sie ein Land</string>
+    <string name="country_prompt_en">Choose a country</string>
+    <string name="CrossWalkLength_prompt_de">Schutzweg Länge wählen</string>
+    <string name="CrossWalkLength_prompt_en">Choose crosswalk length</string>
+    <string name="CrossWalkWidth_prompt_de">Schutzweg Breite wählen</string>
+    <string name="CrossWalkWidth_prompt_en">Choose crosswalk width</string>
+    <string name="title_ausgabe">Ergebnis</string>
+    <string name="berechnung_button_text">Vorschlag berechnen</string>
+    <string name="url_zu_datenblatt">https://www.swarco.com/futurit/Produkte/Beleuchtung/Produkte/AREDO/AREDO-L10#tab-58684</string>
+    <string name="link_text">Datenblatt anzeigen</string>
+    <string name="db_path">/data/data/SchutwegBeleuchtung/databases/</string>
+    <string name="db_name">probedatenbank</string>
+
+
+    <string-array name="country_arrays_de">
+        <item>Österreich</item>
+        <item>Deutschland</item>
+        <item>Dänemark</item>
+    </string-array>
+
+    <string-array name="country_arrays_en">
+        <item>Austria</item>
+        <item>Germany</item>
+        <item>Denmark</item>
+    </string-array>
+
+    <string-array name="CrossWalkLength">
+        <item>3 m</item>
+        <item>3.5 m</item>
+        <item>4 m</item>
+        <item>4.5 m</item>
+        <item>5 m</item>
+        <item>5.5 m</item>
+        <item>6 m</item>
+        <item>6.5 m</item>
+        <item>7 m</item>
+        <item>7.5 m</item>
+    </string-array>
+
+    <string-array name="CrossWalkWidth">
+        <item>2 m</item>
+        <item>2.5 m</item>
+        <item>3 m</item>
+        <item>3.5 m</item>
+        <item>4 m</item>
+        <item>4.5 m</item>
+        <item>5 m</item>
+    </string-array>
+
+</resources>
