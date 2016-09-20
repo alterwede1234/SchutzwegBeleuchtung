@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -43,16 +44,15 @@ public class Eingabe extends AppCompatActivity {
     }
 
     public void Datenabfrage(View view) {
-        DataBaseHelper myDbHelper = new DataBaseHelper(getApplicationContext());
-        myDbHelper = new DataBaseHelper(this);
-        String Tabellen_Name="probedatenbank";
-        String selectQuery="SELECT * FROM " + Tabellen_Name;
-        SQLiteDatabase db = myDbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        TestAdapter mDbHelper = new TestAdapter(getApplicationContext());
+        mDbHelper.createDatabase();
+        mDbHelper.open();
+
+        Cursor cursor = mDbHelper.getTestData();
         List<String> datalist = new ArrayList<String>();
         if(cursor.moveToFirst()) {
             do {
-                String Land = cursor.getString(2);
+                String Land = cursor.getString(1);
                 datalist.add(Land);
             } while (cursor.moveToNext());
         }
@@ -62,16 +62,20 @@ public class Eingabe extends AppCompatActivity {
         datalist.addAll(hs);
         String[] data = new String[datalist.size()];
         datalist.toArray(data);
-        cursor.close();
-        db.close();
+
 
         //String MY_PREFS_NAME = "MzPrefsFile";
        // SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
        // editor.putStringSet("Laender", hs);
        // editor.apply();
 
+        int asdf = cursor.getCount();
+
         Spinner Laenderwahl = (Spinner) findViewById(R.id.Laenderwahl);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
+        //adapter.add(String.valueOf(asdf));
         Laenderwahl.setAdapter(adapter);
+        //cursor.close();
+        mDbHelper.close();
     }
 }
