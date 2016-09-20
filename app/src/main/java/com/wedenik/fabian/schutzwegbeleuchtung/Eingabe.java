@@ -1,23 +1,23 @@
 package com.wedenik.fabian.schutzwegbeleuchtung;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.io.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 
 public class Eingabe extends AppCompatActivity {
+    private DataBaseHelper mDBHelper;
+    private List<String> Laender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,9 @@ public class Eingabe extends AppCompatActivity {
     }
 
 //    todo Bei Zurueckkehr auf einen der beiden Bildschirme den Stack verkleinern, damit man am Handy mit der ZURUECK-Taste nicht jeden einzelnen Schritt zurueckspringt
+
+    //Copy the database from assets
+
 
     public void berechnung(View view) {
         Intent intent1 = new Intent(this, Ausgabe.class);
@@ -44,38 +47,30 @@ public class Eingabe extends AppCompatActivity {
     }
 
     public void Datenabfrage(View view) {
-        TestAdapter mDbHelper = new TestAdapter(getApplicationContext());
-        mDbHelper.createDatabase();
-        mDbHelper.open();
-
-        Cursor cursor = mDbHelper.getTestData();
-        List<String> datalist = new ArrayList<String>();
-        if(cursor.moveToFirst()) {
-            do {
-                String Land = cursor.getString(1);
-                datalist.add(Land);
-            } while (cursor.moveToNext());
-        }
-        Set<String> hs = new HashSet<>();
-        hs.addAll(datalist);
-        datalist.clear();
-        datalist.addAll(hs);
-        String[] data = new String[datalist.size()];
-        datalist.toArray(data);
-
-
-        //String MY_PREFS_NAME = "MzPrefsFile";
-       // SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-       // editor.putStringSet("Laender", hs);
-       // editor.apply();
-
-        int asdf = cursor.getCount();
-
+        setContentView(R.layout.activity_eingabe);
         Spinner Laenderwahl = (Spinner) findViewById(R.id.Laenderwahl);
+        mDBHelper = new DataBaseHelper(this);
+
+        File database = getApplicationContext().getDatabasePath(DataBaseHelper.DB_NAME);
+        if (false == database.exists()){
+            mDBHelper.getReadableDatabase();
+            if(mDBHelper.copyDataBase(getApplicationContext())) {
+                Toast.makeText(this, "Copy database succes", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this,"Copy Data error", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+        Laender = mDBHelper.getLaender();
+
+        Set<String> hs = new HashSet<>();
+        hs.addAll(Laender);
+        Laender.clear();
+        Laender.addAll(hs);
+        String[] data = new String[Laender.size()];
+        Laender.toArray(data);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
-        //adapter.add(String.valueOf(asdf));
         Laenderwahl.setAdapter(adapter);
-        //cursor.close();
-        mDbHelper.close();
     }
 }
