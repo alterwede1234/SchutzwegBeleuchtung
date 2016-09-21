@@ -16,7 +16,6 @@
             android:id="@+id/Laenderwahl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/country_arrays_de"
             android:prompt="@string/country_prompt_de"
             android:clickable="true"
             android:visibility="visible"

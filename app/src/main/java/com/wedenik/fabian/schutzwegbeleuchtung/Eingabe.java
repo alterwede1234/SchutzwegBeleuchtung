@@ -40,7 +40,95 @@ public class Eingabe extends AppCompatActivity {
         setContentView(R.layout.activity_eingabe);
         new DownloadFileFromURL().execute(file_url);
         Spinner Laenderwahl = (Spinner) findViewById(R.id.Laenderwahl);
-        Laenderwahl.setOnItemSelectedListener(new SpinnerActivity());
+        //Laenderwahl.setOnItemSelectedListener(new SpinnerActivity());
+
+        //-------------------
+
+        mDBHelper = new DataBaseHelper(this);
+
+        File database = getApplicationContext().getDatabasePath(DataBaseHelper.DB_NAME);
+        if (!database.exists()){
+            mDBHelper.getReadableDatabase();
+        }
+
+        Laender = mDBHelper.getLaender();
+
+        Set<String> hs = new HashSet<>();
+        hs.addAll(Laender);
+        Laender.clear();
+        Laender.addAll(hs);
+        String[] data = new String[Laender.size()];
+        Laender.toArray(data);
+        Arrays.sort(data);
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
+        Laenderwahl.setAdapter(adapter);
+
+        Laenderwahl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+                // TODO Auto-generated method stub
+
+                String land = arg0.getItemAtPosition(arg2).toString();
+                DataBaseHelper mDBHelper = new DataBaseHelper(Eingabe.this);
+
+                Spinner Laengenwahl = (Spinner) findViewById(R.id.spinner2);
+                Spinner Breitenwahl = (Spinner) findViewById(R.id.spinner);
+
+                File database = getApplicationContext().getDatabasePath(DataBaseHelper.DB_NAME);
+                if (!database.exists()){
+                    mDBHelper.getReadableDatabase();
+                }
+
+                List<String> Laenge = mDBHelper.getLaenge(land);
+                List<String> Breite = mDBHelper.getBreite(land);
+
+                Set<String> hs1 = new HashSet<>();
+                Set<String> hs2 = new HashSet<>();
+
+                hs1.addAll(Laenge);
+                hs2.addAll(Breite);
+
+                Laenge.clear();
+                Breite.clear();
+
+                Laenge.addAll(hs1);
+                Breite.addAll(hs2);
+
+                String[] data1 = new String[Laenge.size()];
+                String[] data2 = new String[Breite.size()];
+
+                Laenge.toArray(data1);
+                Arrays.sort(data1);
+                Breite.toArray(data2);
+                Arrays.sort(data2);
+
+                ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(Eingabe.this, android.R.layout.simple_spinner_item, data1);
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(Eingabe.this, android.R.layout.simple_spinner_item, data2);
+
+                Laengenwahl.setAdapter(adapter1);
+                Breitenwahl.setAdapter(adapter2);
+
+
+
+                Object item = arg0.getItemAtPosition(arg2);
+                if (item!=null) {
+                    Toast.makeText(Eingabe.this, item.toString()+"Selected",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+        //-------------------
 
     }
 

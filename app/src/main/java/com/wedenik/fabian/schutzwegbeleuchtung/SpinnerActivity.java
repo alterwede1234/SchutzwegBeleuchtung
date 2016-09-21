@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.Arrays;
@@ -18,6 +19,14 @@ import java.util.Set;
 public class SpinnerActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
+
+        Object item = parent.getItemAtPosition(pos);
+        if (item!=null) {
+            Toast.makeText(this, item.toString(),
+                    Toast.LENGTH_SHORT).show();
+        }
+        Toast.makeText(this, "Selected",
+                Toast.LENGTH_SHORT).show();
 
         String land = parent.getItemAtPosition(pos).toString();
         DataBaseHelper mDBHelper = new DataBaseHelper(this);
