@@ -138,4 +138,55 @@ public class DataBaseHelper extends SQLiteOpenHelper
         close();
         return Breite;
     }
+    public List<String> getModelle(String land, String laenge, String breite) {
+        List<String> Leuchtenmodell = new ArrayList<>();
+        openDatabase();
+        Cursor cursor = mDataBase.rawQuery("Select * FROM android_metadata WHERE Land='"+land+"' Laenge='"+laenge+"' Breite='"+breite+"'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            String leuchtenmodell = cursor.getString(3);
+            Leuchtenmodell.add(leuchtenmodell);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        close();
+        return Leuchtenmodell;
+    }
+    public List<String> getLeuchten(String land, String laenge, String breite, String modell) {
+        List<String> Leuchten = new ArrayList<>();
+        openDatabase();
+        Cursor cursor = mDataBase.rawQuery("Select * FROM android_metadata WHERE Land='"+land+"' Laenge='"+laenge+"' Breite='"+breite+"' Leuchtenmodell='"+modell+"'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            String leuchte = cursor.getString(4);
+            Leuchten.add(leuchte);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        close();
+        return Leuchten;
+    }
+    public List<String> getHoehen(String land, String laenge, String breite, String modell, String leuchte) {
+        List<String> Hoehen = new ArrayList<>();
+        openDatabase();
+        Cursor cursor = mDataBase.rawQuery("Select * FROM android_metadata WHERE Land='"+land+"' Laenge='"+laenge+"' Breite='"+breite+"' Leuchtenmodell='"+modell+"' Leuchte='"+leuchte+"'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            String hoehe = cursor.getString(5);
+            Hoehen.add(hoehe);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        close();
+        return Hoehen;
+    }
+    public String getAbstand(String land, String laenge, String breite, String modell, String leuchte, String hoehe){
+        openDatabase();
+        Cursor cursor = mDataBase.rawQuery("Select * FROM android_metadata WHERE Land='"+land+"' Laenge='"+laenge+"' Breite='"+breite+"' Leuchtenmodell='"+modell+"' Leuchte='"+leuchte+"' Hoehe='"+hoehe+"'",null);
+        cursor.moveToFirst();
+        String abstand = cursor.getString(6);
+        cursor.close();
+        close();
+        return abstand;
+    }
 }

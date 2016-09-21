@@ -40,9 +40,6 @@ public class Eingabe extends AppCompatActivity {
         setContentView(R.layout.activity_eingabe);
         new DownloadFileFromURL().execute(file_url);
         Spinner Laenderwahl = (Spinner) findViewById(R.id.Laenderwahl);
-        //Laenderwahl.setOnItemSelectedListener(new SpinnerActivity());
-
-        //-------------------
 
         mDBHelper = new DataBaseHelper(this);
 
@@ -61,7 +58,6 @@ public class Eingabe extends AppCompatActivity {
         Laender.toArray(data);
         Arrays.sort(data);
 
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
         Laenderwahl.setAdapter(adapter);
 
@@ -70,18 +66,12 @@ public class Eingabe extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
-                // TODO Auto-generated method stub
 
                 String land = arg0.getItemAtPosition(arg2).toString();
                 DataBaseHelper mDBHelper = new DataBaseHelper(Eingabe.this);
 
                 Spinner Laengenwahl = (Spinner) findViewById(R.id.spinner2);
                 Spinner Breitenwahl = (Spinner) findViewById(R.id.spinner);
-
-                File database = getApplicationContext().getDatabasePath(DataBaseHelper.DB_NAME);
-                if (!database.exists()){
-                    mDBHelper.getReadableDatabase();
-                }
 
                 List<String> Laenge = mDBHelper.getLaenge(land);
                 List<String> Breite = mDBHelper.getBreite(land);
@@ -124,7 +114,6 @@ public class Eingabe extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
 
             }
         });
@@ -153,54 +142,6 @@ public class Eingabe extends AppCompatActivity {
         startActivity(intent1);
     }
 
-    public void Datenabfrage(View view) {
-        setContentView(R.layout.activity_eingabe);
-        Spinner Laenderwahl = (Spinner) findViewById(R.id.Laenderwahl);
-        //Spinner Laengenwahl = (Spinner) findViewById(R.id.spinner2);
-        //Spinner Breitenwahl = (Spinner) findViewById(R.id.spinner);
-
-        mDBHelper = new DataBaseHelper(this);
-
-        File database = getApplicationContext().getDatabasePath(DataBaseHelper.DB_NAME);
-        if (!database.exists()){
-            mDBHelper.getReadableDatabase();
-        }
-
-        Laender = mDBHelper.getLaender();
-        //Laenge = mDBHelper.getLaenge();
-        //Breite = mDBHelper.getBreite();
-
-        //remove all double entries from Laender,Laenge,Breite and turn to String array
-        Set<String> hs = new HashSet<>();
-        //Set<String> hs2 = new HashSet<>();
-        //Set<String> hs3 = new HashSet<>();
-        hs.addAll(Laender);
-        //hs2.addAll(Laenge);
-        //hs3.addAll(Breite);
-        Laender.clear();
-        //Laenge.clear();
-        //Breite.clear();
-        Laender.addAll(hs);
-        //Laenge.addAll(hs2);
-        //Breite.addAll(hs3);
-        String[] data = new String[Laender.size()];
-        //String[] data2 = new String[Laenge.size()];
-        //String[] data3 = new String[Breite.size()];
-        Laender.toArray(data);
-        Arrays.sort(data);
-        //Laenge.toArray(data2);
-        //Arrays.sort(data2);
-        //Breite.toArray(data3);
-        //Arrays.sort(data3);
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
-        //ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data2);
-        //ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data3);
-        Laenderwahl.setAdapter(adapter);
-        //Laengenwahl.setAdapter(adapter2);
-        //Breitenwahl.setAdapter(adapter3);
-    }
 
     @Override
     protected ProgressDialog onCreateDialog(int id) {

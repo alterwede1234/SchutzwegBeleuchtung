@@ -55,12 +55,5 @@
             android:paddingLeft="10dp" android:paddingRight="10dp" android:singleLine="true"
             android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
             android:onClick="berechnung"/>
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Daten Abfragen"
-            android:id="@+id/button5" android:layout_centerVertical="true" android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" android:enabled="true" android:clickable="true"
-            android:onClick="Datenabfrage"/>
 
 </RelativeLayout>
