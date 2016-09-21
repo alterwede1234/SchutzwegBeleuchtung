@@ -24,7 +24,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
     private static String TAG = "DataBaseHelper"; // Tag just for the LogCat window
     //destination path (location) of our database on device
     public static final String DB_PATH = "/data/data/com.wedenik.fabian.schutzwegbeleuchtung/databases/";
-    public static final String DB_NAME ="android_database";// Database name
+    public static final String DB_NAME ="android_database.sqlite";// Database name
     private SQLiteDatabase mDataBase;
     private final Context mContext;
 
@@ -48,6 +48,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
             }
             mOutput.flush();
             mOutput.close();
+            mInput.close();
             Log.w("Eingabe","DB copied");
             return true;
         }catch (Exception e){
@@ -108,5 +109,33 @@ public class DataBaseHelper extends SQLiteOpenHelper
         cursor.close();
         close();
         return Laender;
+    }
+    public List<String> getLaenge(String land) {
+        List<String> Laenge = new ArrayList<>();
+        openDatabase();
+        Cursor cursor = mDataBase.rawQuery("SELECT * FROM android_metadata WHERE Land=''"+land+"''", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            String laenge = cursor.getString(1);
+            Laenge.add(laenge);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        close();
+        return Laenge;
+    }
+    public List<String> getBreite(String land) {
+        List<String> Breite = new ArrayList<>();
+        openDatabase();
+        Cursor cursor = mDataBase.rawQuery("SELECT * FROM android_metadata WHERE Land=''"+land+"''", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            String breite = cursor.getString(2);
+            Breite.add(breite);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        close();
+        return Breite;
     }
 }
