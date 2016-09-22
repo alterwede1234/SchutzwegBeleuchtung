@@ -141,7 +141,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
     public List<String> getModelle(String land, String laenge, String breite) {
         List<String> Leuchtenmodell = new ArrayList<>();
         openDatabase();
-        Cursor cursor = mDataBase.rawQuery("Select * FROM android_metadata WHERE Land='"+land+"' Laenge='"+laenge+"' Breite='"+breite+"'",null);
+        Cursor cursor = mDataBase.rawQuery("Select * FROM android_metadata WHERE Land='"+land+"' AND Laenge='"+laenge+"' AND Breite='"+breite+"'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
             String leuchtenmodell = cursor.getString(3);
@@ -155,7 +155,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
     public List<String> getLeuchten(String land, String laenge, String breite, String modell) {
         List<String> Leuchten = new ArrayList<>();
         openDatabase();
-        Cursor cursor = mDataBase.rawQuery("Select * FROM android_metadata WHERE Land='"+land+"' Laenge='"+laenge+"' Breite='"+breite+"' Leuchtenmodell='"+modell+"'",null);
+        Cursor cursor = mDataBase.rawQuery("Select * FROM android_metadata WHERE Land='"+land+"' AND Laenge='"+laenge+"' AND Breite='"+breite+"' AND Leuchtenmodell='"+modell+"'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
             String leuchte = cursor.getString(4);
@@ -169,7 +169,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
     public List<String> getHoehen(String land, String laenge, String breite, String modell, String leuchte) {
         List<String> Hoehen = new ArrayList<>();
         openDatabase();
-        Cursor cursor = mDataBase.rawQuery("Select * FROM android_metadata WHERE Land='"+land+"' Laenge='"+laenge+"' Breite='"+breite+"' Leuchtenmodell='"+modell+"' Leuchte='"+leuchte+"'",null);
+        Cursor cursor = mDataBase.rawQuery("Select * FROM android_metadata WHERE Land='"+land+"' AND Laenge='"+laenge+"' AND Breite='"+breite+"' AND Leuchtenmodell='"+modell+"' AND Leuchte='"+leuchte+"'",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
             String hoehe = cursor.getString(5);
@@ -182,7 +182,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
     }
     public String getAbstand(String land, String laenge, String breite, String modell, String leuchte, String hoehe){
         openDatabase();
-        Cursor cursor = mDataBase.rawQuery("Select * FROM android_metadata WHERE Land='"+land+"' Laenge='"+laenge+"' Breite='"+breite+"' Leuchtenmodell='"+modell+"' Leuchte='"+leuchte+"' Hoehe='"+hoehe+"'",null);
+        Cursor cursor = mDataBase.rawQuery("Select * FROM android_metadata WHERE Land='"+land+"' AND Laenge='"+laenge+"' AND Breite='"+breite+"' AND Leuchtenmodell='"+modell+"' AND Leuchte='"+leuchte+"' AND Hoehe='"+hoehe+"'",null);
         cursor.moveToFirst();
         String abstand = cursor.getString(6);
         cursor.close();
