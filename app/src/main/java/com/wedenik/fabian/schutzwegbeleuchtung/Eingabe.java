@@ -3,7 +3,6 @@ package com.wedenik.fabian.schutzwegbeleuchtung;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +39,7 @@ public class Eingabe extends AppCompatActivity {
         setContentView(R.layout.activity_eingabe);
         new DownloadFileFromURL().execute(file_url);
         Spinner Laenderwahl = (Spinner) findViewById(R.id.Laenderwahl);
+        Spinner Laengenwahl = (Spinner) findViewById(R.id.spinner2);
 
         mDBHelper = new DataBaseHelper(this);
 
@@ -71,38 +71,25 @@ public class Eingabe extends AppCompatActivity {
                 DataBaseHelper mDBHelper = new DataBaseHelper(Eingabe.this);
 
                 Spinner Laengenwahl = (Spinner) findViewById(R.id.spinner2);
-                Spinner Breitenwahl = (Spinner) findViewById(R.id.spinner);
 
-                List<String> Laenge = mDBHelper.getLaenge(land);
-                List<String> Breite = mDBHelper.getBreite(land);
+                Laenge = mDBHelper.getLaenge(land);
 
                 Set<String> hs1 = new HashSet<>();
-                Set<String> hs2 = new HashSet<>();
 
                 hs1.addAll(Laenge);
-                hs2.addAll(Breite);
 
                 Laenge.clear();
-                Breite.clear();
 
                 Laenge.addAll(hs1);
-                Breite.addAll(hs2);
 
                 String[] data1 = new String[Laenge.size()];
-                String[] data2 = new String[Breite.size()];
 
                 Laenge.toArray(data1);
                 Arrays.sort(data1);
-                Breite.toArray(data2);
-                Arrays.sort(data2);
 
                 ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(Eingabe.this, android.R.layout.simple_spinner_item, data1);
-                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(Eingabe.this, android.R.layout.simple_spinner_item, data2);
 
                 Laengenwahl.setAdapter(adapter1);
-                Breitenwahl.setAdapter(adapter2);
-
-
 
                 Object item = arg0.getItemAtPosition(arg2);
                 if (item!=null) {
@@ -117,7 +104,47 @@ public class Eingabe extends AppCompatActivity {
 
             }
         });
-        //-------------------
+
+        Laengenwahl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+
+                String laenge = arg0.getItemAtPosition(arg2).toString();
+                DataBaseHelper mDBHelper = new DataBaseHelper(Eingabe.this);
+
+                Spinner Laenderwahl = (Spinner) findViewById(R.id.Laenderwahl);
+                Spinner Breitenwahl = (Spinner) findViewById(R.id.spinner);
+
+                String land = Laenderwahl.getSelectedItem().toString();
+
+                Breite = mDBHelper.getBreite(land, laenge);
+
+                Set<String> hs2 = new HashSet<>();
+
+                hs2.addAll(Breite);
+
+                Breite.clear();
+
+                Breite.addAll(hs2);
+
+                String[] data2 = new String[Breite.size()];
+
+                Breite.toArray(data2);
+                Arrays.sort(data2);
+
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(Eingabe.this, android.R.layout.simple_spinner_item, data2);
+
+                Breitenwahl.setAdapter(adapter2);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
 
     }
 

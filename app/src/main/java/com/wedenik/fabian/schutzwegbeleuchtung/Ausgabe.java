@@ -120,7 +120,6 @@ public class Ausgabe extends AppCompatActivity {
             }
         });
 
-
         lph_lpa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {

@@ -124,10 +124,10 @@ public class DataBaseHelper extends SQLiteOpenHelper
         close();
         return Laenge;
     }
-    public List<String> getBreite(String land) {
+    public List<String> getBreite(String land, String laenge) {
         List<String> Breite = new ArrayList<>();
         openDatabase();
-        Cursor cursor = mDataBase.rawQuery("SELECT * FROM android_metadata WHERE Land='"+land+"'", null);
+        Cursor cursor = mDataBase.rawQuery("SELECT * FROM android_metadata WHERE Land='"+land+"' AND Laenge='"+laenge+"'", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             String breite = cursor.getString(2);

@@ -15,12 +15,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true" android:id="@+id/linearLayout">
+        <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/leuchtenmodelle" android:clickable="true"
+                android:spinnerMode="dropdown"/>
+        <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/leuchte"
+                android:spinnerMode="dropdown" android:clickable="true"/>
+        <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lph_lpa" android:clickable="true"
+                android:spinnerMode="dropdown"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/laenge" android:layout_alignParentTop="true" android:layout_toLeftOf="@+id/land"
-                android:layout_toStartOf="@+id/land" android:layout_marginTop="62dp"
+                android:layout_toStartOf="@+id/land"
                 android:background="@color/highlighted_text_material_dark" android:text="Gewaehlte Laenge: "/>
         <TextView
                     android:layout_width="wrap_content"
@@ -37,30 +52,6 @@
                     android:layout_below="@+id/breite"
                     android:layout_alignRight="@+id/button3" android:layout_alignEnd="@+id/button3"/>
     </LinearLayout>
-    <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:layout_gravity="center_horizontal" android:columnCount="15"
-            android:orientation="vertical">
-        <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/leuchtenmodelle" android:layout_row="0" android:layout_column="14" android:clickable="true"
-                android:spinnerMode="dropdown"/>
-        <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/leuchte" android:layout_row="1" android:layout_column="14"
-                android:spinnerMode="dropdown" android:clickable="true"/>
-        <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/lph_lpa" android:layout_row="2" android:layout_column="14" android:clickable="true"
-                android:spinnerMode="dropdown"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/lichtpunktabstand" android:layout_row="3" android:layout_column="1"/>
-    </GridLayout>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,5 +74,13 @@
             android:id="@+id/lichtpunkthoehe" android:layout_above="@+id/textView" android:layout_alignRight="@+id/textView"
             android:layout_alignEnd="@+id/textView" android:layout_marginRight="63dp" android:layout_marginEnd="63dp"
             android:layout_marginBottom="135dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lichtpunktabstand"
+            android:background="@color/highlighted_text_material_dark"
+            android:layout_alignLeft="@+id/return_button"
+            android:layout_alignStart="@+id/return_button" android:layout_alignTop="@+id/linearLayout"
+            android:layout_marginLeft="80dp" android:layout_marginTop="20dp"/>
 
 </RelativeLayout>
