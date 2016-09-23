@@ -159,4 +159,28 @@ public class DataBaseHelper extends SQLiteOpenHelper
         close();
         return abstand;
     }
+    public ArrayList<String> getSprachen(String leuchte){
+        ArrayList<String> sprachen = new ArrayList<>();
+        openDatabase();
+        Cursor cursor = mDataBase.rawQuery("SELECT distinct Sprache FROM datasheets WHERE Leuchte='"+leuchte+"'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            String sprache = cursor.getString(0);
+            sprachen.add(sprache);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        close();
+        return sprachen;
+    }
+
+    public String getURL(String leuchte, String sprache){
+        openDatabase();
+        Cursor cursor = mDataBase.rawQuery("SELECT URL FROM datasheets WHERE Leuchte='"+leuchte+"' AND Sprache='"+sprache+"'", null);
+        cursor.moveToFirst();
+        String URL = cursor.getString(0);
+        cursor.close();
+        close();
+        return URL;
+    }
 }

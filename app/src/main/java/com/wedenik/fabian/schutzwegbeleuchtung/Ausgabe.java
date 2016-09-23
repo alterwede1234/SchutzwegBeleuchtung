@@ -158,7 +158,7 @@ public class Ausgabe extends AppCompatActivity {
     public void show_data_sheet(View view) {
         Spinner Leuchte = (Spinner) findViewById(R.id.leuchte);
         String leuchte = Leuchte.getSelectedItem().toString();
-        DataSheetHelper mDBHelper = new DataSheetHelper(Ausgabe.this);
+        DataBaseHelper mDBHelper = new DataBaseHelper(Ausgabe.this);
         ArrayList<String> sprachen = mDBHelper.getSprachen(leuchte);
         Bundle dialog = new Bundle();
         dialog.putStringArrayList("sprachen", sprachen);

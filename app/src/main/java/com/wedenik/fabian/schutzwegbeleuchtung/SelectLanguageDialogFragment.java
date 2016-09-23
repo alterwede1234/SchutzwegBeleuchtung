@@ -32,7 +32,7 @@ public class SelectLanguageDialogFragment extends DialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int id){
-                        DataSheetHelper mDBHelper = new DataSheetHelper(getActivity());
+                        DataBaseHelper mDBHelper = new DataBaseHelper(getActivity());
                         ListView lw = ((AlertDialog)dialog).getListView();
                         String selectedLanguage = lw.getAdapter().getItem(lw.getCheckedItemPosition()).toString();
                         String URL = mDBHelper.getURL(savedInstanceState.getString("leuchte"), selectedLanguage);
