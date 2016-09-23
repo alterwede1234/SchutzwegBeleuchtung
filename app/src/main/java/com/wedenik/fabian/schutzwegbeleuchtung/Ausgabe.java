@@ -1,5 +1,7 @@
 package com.wedenik.fabian.schutzwegbeleuchtung;
 
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -154,8 +156,15 @@ public class Ausgabe extends AppCompatActivity {
     }
 
     public void show_data_sheet(View view) {
-        String url = getString(R.string.url_zu_datenblatt);
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        startActivity(browserIntent);
+        Spinner Leuchte = (Spinner) findViewById(R.id.leuchte);
+        String leuchte = Leuchte.getSelectedItem().toString();
+        DataSheetHelper mDBHelper = new DataSheetHelper(Ausgabe.this);
+        ArrayList<String> sprachen = mDBHelper.getSprachen(leuchte);
+        Bundle dialog = new Bundle();
+        dialog.putStringArrayList("sprachen", sprachen);
+        dialog.putString("leuchte", leuchte);
+        DialogFragment SprachenWahl = new SelectLanguageDialogFragment();
+        SprachenWahl.setArguments(dialog);
+        SprachenWahl.show(getFragmentManager(),"SelectLanguageDialogFragment" );
     }
 }
