@@ -28,33 +28,24 @@ public class DataBaseHelper extends SQLiteOpenHelper
         this.mContext = context;
     }
 
-    public boolean openDatabase() throws SQLException
+
+    public void openDatabase()
     {
-        String mPath = DB_PATH + DB_NAME;
-        //Log.v("mPath", mPath);
-        mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS | SQLiteDatabase.OPEN_READONLY);
-        //mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
-        return mDataBase != null;
+        String dbPath = mContext.getDatabasePath(DB_NAME).getPath();
+        if(mDataBase != null && mDataBase.isOpen())
+        {
+            return;
+        }
+        mDataBase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READONLY);
     }
 
-
-    //public void openDatabase()
-    //{
-    //    String dbPath = mContext.getDatabasePath(DB_NAME).getPath();
-    //    if(mDataBase != null && mDataBase.isOpen())
-    //    {
-    //        return;
-    //    }
-    //    mDataBase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READONLY);
-    //}
-
     //Check that the database exists here: /data/data/your package/databases/Da Name
-    //private boolean checkDataBase()
-    //{
-    //    File dbFile = new File(DB_PATH + DB_NAME);
-    //    //Log.v("dbFile", dbFile + "   "+ dbFile.exists());
-    //    return dbFile.exists();
-    //}
+    private boolean checkDataBase()
+    {
+        File dbFile = new File(DB_PATH + DB_NAME);
+        //Log.v("dbFile", dbFile + "   "+ dbFile.exists());
+        return dbFile.exists();
+    }
 
 
 
@@ -76,10 +67,10 @@ public class DataBaseHelper extends SQLiteOpenHelper
 
     }
 
-    public List<String> getLaender() {
-        List<String> Laender = new ArrayList<>();
+    public ArrayList<String> getLaender() {
+        ArrayList<String> Laender = new ArrayList<>();
         openDatabase();
-        Cursor cursor = mDataBase.rawQuery("SELECT * FROM android_metadata", null);
+        Cursor cursor = mDataBase.rawQuery("SELECT distinct Land FROM android_metadata", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             String Land = cursor.getString(0);
@@ -90,13 +81,13 @@ public class DataBaseHelper extends SQLiteOpenHelper
         close();
         return Laender;
     }
-    public List<String> getLaenge(String land) {
-        List<String> Laenge = new ArrayList<>();
+    public ArrayList<String> getLaenge(String land) {
+        ArrayList<String> Laenge = new ArrayList<>();
         openDatabase();
-        Cursor cursor = mDataBase.rawQuery("SELECT * FROM android_metadata WHERE Land='"+land+"'", null);
+        Cursor cursor = mDataBase.rawQuery("SELECT distinct Laenge FROM android_metadata WHERE Land='"+land+"'", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
-            String laenge = cursor.getString(1);
+            String laenge = cursor.getString(0);
             Laenge.add(laenge);
             cursor.moveToNext();
         }

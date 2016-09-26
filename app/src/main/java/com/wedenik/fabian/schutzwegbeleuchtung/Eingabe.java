@@ -2,9 +2,8 @@ package com.wedenik.fabian.schutzwegbeleuchtung;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.os.*;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,7 +20,6 @@ import java.util.List;
 import java.util.Set;
 
 
-
 public class Eingabe extends AppCompatActivity {
     private DataBaseHelper mDBHelper;
     private List<String> Laender;
@@ -32,120 +30,105 @@ public class Eingabe extends AppCompatActivity {
     public static final int progress_bar_type = 0;
 
     private static String file_url = "http://swarcofiles.com/futurit/app/android_database.sqlite";
-    //private static String file_url = "http://www.asdf.com/89asdf.gif";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eingabe);
-        //new DownloadFileFromURL().execute(file_url);
-        Spinner Laenderwahl = (Spinner) findViewById(R.id.Laenderwahl);
-        Spinner Laengenwahl = (Spinner) findViewById(R.id.spinner2);
 
-        mDBHelper = new DataBaseHelper(this);
 
-        File database = getApplicationContext().getDatabasePath(DataBaseHelper.DB_NAME);
-        if (!database.exists()){
-            mDBHelper.getReadableDatabase();
-        }
-
-        Laender = mDBHelper.getLaender();
-
-        Set<String> hs = new HashSet<>();
-        hs.addAll(Laender);
-        Laender.clear();
-        Laender.addAll(hs);
-        String[] data = new String[Laender.size()];
-        Laender.toArray(data);
-        Arrays.sort(data);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
-        Laenderwahl.setAdapter(adapter);
-
-        Laenderwahl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
+        final Handler mHandler = new Handler(Looper.getMainLooper()){
             @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
-
-                String land = arg0.getItemAtPosition(arg2).toString();
-                DataBaseHelper mDBHelper = new DataBaseHelper(Eingabe.this);
-
+            public void handleMessage(Message message) {
+                Toast.makeText(Eingabe.this, "Download complete", Toast.LENGTH_SHORT).show();
+                mDBHelper = new DataBaseHelper(Eingabe.this);
+                Spinner Laenderwahl = (Spinner) findViewById(R.id.Laenderwahl);
                 Spinner Laengenwahl = (Spinner) findViewById(R.id.spinner2);
 
-                Laenge = mDBHelper.getLaenge(land);
-
-                Set<String> hs1 = new HashSet<>();
-
-                hs1.addAll(Laenge);
-
-                Laenge.clear();
-
-                Laenge.addAll(hs1);
-
-                String[] data1 = new String[Laenge.size()];
-
-                Laenge.toArray(data1);
-                Arrays.sort(data1);
-
-                ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(Eingabe.this, android.R.layout.simple_spinner_item, data1);
-
-                Laengenwahl.setAdapter(adapter1);
-
-                Object item = arg0.getItemAtPosition(arg2);
-                if (item!=null) {
-                    Toast.makeText(Eingabe.this, item.toString()+"Selected",
-                            Toast.LENGTH_SHORT).show();
+                File database = getApplicationContext().getDatabasePath(DataBaseHelper.DB_NAME);
+                if (!database.exists()){
+                    mDBHelper.getReadableDatabase();
                 }
 
+                Laender = mDBHelper.getLaender();
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(Eingabe.this, android.R.layout.simple_spinner_item, Laender);
+                Laenderwahl.setAdapter(adapter);
+
+                Laenderwahl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                               int arg2, long arg3) {
+
+                        String land = arg0.getItemAtPosition(arg2).toString();
+
+                        Spinner Laengenwahl = (Spinner) findViewById(R.id.spinner2);
+
+                        Laenge = mDBHelper.getLaenge(land);
+
+                        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(Eingabe.this, android.R.layout.simple_spinner_item, Laenge);
+
+                        Laengenwahl.setAdapter(adapter1);
+
+                        Object item = arg0.getItemAtPosition(arg2);
+                        if (item!=null) {
+                            Toast.makeText(Eingabe.this, item.toString()+"Selected",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> arg0) {
+
+                    }
+                });
+
+                Laengenwahl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                               int arg2, long arg3) {
+
+                        String laenge = arg0.getItemAtPosition(arg2).toString();
+                        DataBaseHelper mDBHelper = new DataBaseHelper(Eingabe.this);
+
+                        Spinner Laenderwahl = (Spinner) findViewById(R.id.Laenderwahl);
+                        Spinner Breitenwahl = (Spinner) findViewById(R.id.spinner);
+
+                        String land = Laenderwahl.getSelectedItem().toString();
+
+                        Breite = mDBHelper.getBreite(land, laenge);
+
+                        Set<String> hs2 = new HashSet<>();
+
+                        hs2.addAll(Breite);
+
+                        Breite.clear();
+
+                        Breite.addAll(hs2);
+
+                        String[] data2 = new String[Breite.size()];
+
+                        Breite.toArray(data2);
+                        Arrays.sort(data2);
+
+                        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(Eingabe.this, android.R.layout.simple_spinner_item, data2);
+
+                        Breitenwahl.setAdapter(adapter2);
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> arg0) {
+
+                    }
+                });
+
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-
-            }
-        });
-
-        Laengenwahl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
-
-                String laenge = arg0.getItemAtPosition(arg2).toString();
-                DataBaseHelper mDBHelper = new DataBaseHelper(Eingabe.this);
-
-                Spinner Laenderwahl = (Spinner) findViewById(R.id.Laenderwahl);
-                Spinner Breitenwahl = (Spinner) findViewById(R.id.spinner);
-
-                String land = Laenderwahl.getSelectedItem().toString();
-
-                Breite = mDBHelper.getBreite(land, laenge);
-
-                Set<String> hs2 = new HashSet<>();
-
-                hs2.addAll(Breite);
-
-                Breite.clear();
-
-                Breite.addAll(hs2);
-
-                String[] data2 = new String[Breite.size()];
-
-                Breite.toArray(data2);
-                Arrays.sort(data2);
-
-                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(Eingabe.this, android.R.layout.simple_spinner_item, data2);
-
-                Breitenwahl.setAdapter(adapter2);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-
-            }
-        });
+        };
+        new DownloadFileFromURL(mHandler).execute(file_url);
 
     }
 
@@ -192,6 +175,11 @@ public class Eingabe extends AppCompatActivity {
      * Background Async Task to download file
      * */
     class DownloadFileFromURL extends AsyncTask<String, String, String> {
+        private final Handler mHandler;
+
+        public DownloadFileFromURL(Handler mHandler) {
+            this.mHandler = mHandler;
+        }
 
         /**
          * Before starting background thread Show Progress Bar Dialog
@@ -221,6 +209,7 @@ public class Eingabe extends AppCompatActivity {
                 InputStream input = new BufferedInputStream(url.openStream(),
                         8192);
 
+
                 String PATH = "/data/data/" + getApplicationContext().getPackageName() + "/databases/";
                 File file = new File(PATH, "android_database.sqlite");
                 // Output stream
@@ -246,6 +235,9 @@ public class Eingabe extends AppCompatActivity {
                 // closing streams
                 output.close();
                 input.close();
+
+                Message message = mHandler.obtainMessage(0, "dw finished");
+                message.sendToTarget();
 
             } catch (Exception e) {
                 Log.e("Error: ", e.getMessage());
