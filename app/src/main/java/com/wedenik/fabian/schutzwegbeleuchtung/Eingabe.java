@@ -32,12 +32,13 @@ public class Eingabe extends AppCompatActivity {
     public static final int progress_bar_type = 0;
 
     private static String file_url = "http://swarcofiles.com/futurit/app/android_database.sqlite";
+    //private static String file_url = "http://www.asdf.com/89asdf.gif";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eingabe);
-        new DownloadFileFromURL().execute(file_url);
+        //new DownloadFileFromURL().execute(file_url);
         Spinner Laenderwahl = (Spinner) findViewById(R.id.Laenderwahl);
         Spinner Laengenwahl = (Spinner) findViewById(R.id.spinner2);
 
@@ -212,7 +213,7 @@ public class Eingabe extends AppCompatActivity {
                 URLConnection conection = url.openConnection();
                 conection.connect();
 
-                // this will be useful so that you can show a tipical 0-100%
+                // this will be useful so that you can show a typical 0-100%
                 // progress bar
                 int lenghtOfFile = conection.getContentLength();
 

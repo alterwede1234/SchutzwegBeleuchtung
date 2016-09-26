@@ -9,6 +9,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -27,24 +28,33 @@ public class DataBaseHelper extends SQLiteOpenHelper
         this.mContext = context;
     }
 
-
-    public void openDatabase()
+    public boolean openDatabase() throws SQLException
     {
-        String dbPath = mContext.getDatabasePath(DB_NAME).getPath();
-        if(mDataBase != null && mDataBase.isOpen())
-        {
-            return;
-        }
-        mDataBase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READONLY);
+        String mPath = DB_PATH + DB_NAME;
+        //Log.v("mPath", mPath);
+        mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS | SQLiteDatabase.OPEN_READONLY);
+        //mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+        return mDataBase != null;
     }
+
+
+    //public void openDatabase()
+    //{
+    //    String dbPath = mContext.getDatabasePath(DB_NAME).getPath();
+    //    if(mDataBase != null && mDataBase.isOpen())
+    //    {
+    //        return;
+    //    }
+    //    mDataBase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READONLY);
+    //}
 
     //Check that the database exists here: /data/data/your package/databases/Da Name
-    private boolean checkDataBase()
-    {
-        File dbFile = new File(DB_PATH + DB_NAME);
-        //Log.v("dbFile", dbFile + "   "+ dbFile.exists());
-        return dbFile.exists();
-    }
+    //private boolean checkDataBase()
+    //{
+    //    File dbFile = new File(DB_PATH + DB_NAME);
+    //    //Log.v("dbFile", dbFile + "   "+ dbFile.exists());
+    //    return dbFile.exists();
+    //}
 
 
 

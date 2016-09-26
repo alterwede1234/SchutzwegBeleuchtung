@@ -19,10 +19,12 @@ public class SelectLanguageDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        List<String> Sprachen = savedInstanceState.getStringArrayList("sprachen");
+        Bundle bundle = getArguments();
+        List<String> Sprachen = bundle.getStringArrayList("sprachen");
+        final String leuchte = bundle.getString("leuchte");
         String[] data = new String[Sprachen.size()];
         Sprachen.toArray(data);
-        ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, data);
+        ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_singlechoice, data);
         builder.setTitle("Select Language")
                 .setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener(){
                     @Override
@@ -35,7 +37,7 @@ public class SelectLanguageDialogFragment extends DialogFragment {
                         DataBaseHelper mDBHelper = new DataBaseHelper(getActivity());
                         ListView lw = ((AlertDialog)dialog).getListView();
                         String selectedLanguage = lw.getAdapter().getItem(lw.getCheckedItemPosition()).toString();
-                        String URL = mDBHelper.getURL(savedInstanceState.getString("leuchte"), selectedLanguage);
+                        String URL = mDBHelper.getURL(leuchte, selectedLanguage);
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
                         startActivity(browserIntent);
 
