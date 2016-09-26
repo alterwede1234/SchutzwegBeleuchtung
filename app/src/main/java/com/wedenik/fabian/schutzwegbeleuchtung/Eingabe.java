@@ -212,6 +212,9 @@ public class Eingabe extends AppCompatActivity {
 
                 String PATH = "/data/data/" + getApplicationContext().getPackageName() + "/databases/";
                 File file = new File(PATH, "android_database.sqlite");
+
+                openOrCreateDatabase("asdf.sqlite",MODE_PRIVATE, null);
+
                 // Output stream
                 OutputStream output = new FileOutputStream(file);
 
