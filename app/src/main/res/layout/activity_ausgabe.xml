@@ -31,26 +31,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/lph_lpa" android:clickable="true"
                 android:spinnerMode="dropdown"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/laenge" android:layout_alignParentTop="true" android:layout_toLeftOf="@+id/land"
-                android:layout_toStartOf="@+id/land"
-                android:background="@color/highlighted_text_material_dark" android:text="Gewaehlte Laenge: "/>
-        <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/breite"
-                    android:background="@color/highlighted_text_material_dark" android:text="Gewaehlte Breite: "
-                    android:layout_below="@+id/laenge" android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"/>
-        <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/land"
-                    android:background="@color/highlighted_text_material_dark" android:text="Gewaehltes Land: "
-                    android:layout_below="@+id/breite"
-                    android:layout_alignRight="@+id/button3" android:layout_alignEnd="@+id/button3"/>
     </LinearLayout>
     <Button
             android:layout_width="wrap_content"
@@ -73,7 +53,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/lichtpunkthoehe" android:layout_above="@+id/textView" android:layout_alignRight="@+id/textView"
             android:layout_alignEnd="@+id/textView" android:layout_marginRight="63dp" android:layout_marginEnd="63dp"
-            android:layout_marginBottom="135dp"/>
+            android:layout_marginBottom="135dp" android:background="@color/highlighted_text_material_dark"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

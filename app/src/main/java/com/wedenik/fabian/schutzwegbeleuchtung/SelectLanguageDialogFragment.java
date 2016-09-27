@@ -10,21 +10,19 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
- * Created by fabian on 22.09.16.
+ * Created by fabian wedenik on 25.09.16.
  */
 public class SelectLanguageDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         Bundle bundle = getArguments();
-        List<String> Sprachen = bundle.getStringArrayList("sprachen");
+        ArrayList<String> Sprachen = bundle.getStringArrayList("sprachen");
         final String leuchte = bundle.getString("leuchte");
-        String[] data = new String[Sprachen.size()];
-        Sprachen.toArray(data);
-        ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_singlechoice, data);
+        ArrayAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_singlechoice, Sprachen);
         builder.setTitle("Select Language")
                 .setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener(){
                     @Override

@@ -1,9 +1,7 @@
 package com.wedenik.fabian.schutzwegbeleuchtung;
 
-import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,15 +22,6 @@ public class Ausgabe extends AppCompatActivity {
         final String laenge = extras.getString("Laenge");
         final String breite = extras.getString("Breite");
         final String land = extras.getString("Land");
-        TextView textView = (TextView) findViewById(R.id.laenge);
-        textView.setTextSize(20);
-        textView.append(laenge);
-        TextView textView2 = (TextView) findViewById(R.id.breite);
-        textView2.setTextSize(20);
-        textView2.append(breite);
-        TextView textView3 = (TextView) findViewById(R.id.land);
-        textView3.setTextSize(20);
-        textView3.append(land);
 
         Spinner leuchte = (Spinner) findViewById(R.id.leuchte);
         Spinner lph_lpa = (Spinner) findViewById(R.id.lph_lpa);
@@ -45,8 +34,7 @@ public class Ausgabe extends AppCompatActivity {
             mDBHelper.getReadableDatabase();
         }
 
-        List<String> Leuchtenmodelle = new ArrayList<>();
-        Leuchtenmodelle = mDBHelper.getModelle(land, laenge, breite);
+        List<String> Leuchtenmodelle = mDBHelper.getModelle(land, laenge, breite);
         Spinner leuchtenmodelle = (Spinner) findViewById(R.id.leuchtenmodelle);
         Set<String> hs = new HashSet<>();
         hs.addAll(Leuchtenmodelle);
@@ -56,7 +44,7 @@ public class Ausgabe extends AppCompatActivity {
         Leuchtenmodelle.toArray(data);
         Arrays.sort(data);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
         leuchtenmodelle.setAdapter(adapter);
 
         leuchtenmodelle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -78,7 +66,7 @@ public class Ausgabe extends AppCompatActivity {
                 leuchten.toArray(data);
                 Arrays.sort(data);
 
-                ArrayAdapter adapter = new ArrayAdapter<String>(Ausgabe.this,android.R.layout.simple_spinner_item,data);
+                ArrayAdapter adapter = new ArrayAdapter<>(Ausgabe.this,android.R.layout.simple_spinner_item,data);
                 leuchte.setAdapter(adapter);
 
                 leuchte.setVisibility(View.VISIBLE);
@@ -110,7 +98,7 @@ public class Ausgabe extends AppCompatActivity {
                 hoehen.toArray(data);
                 Arrays.sort(data);
 
-                ArrayAdapter adapter = new ArrayAdapter<String>(Ausgabe.this,android.R.layout.simple_spinner_item,data);
+                ArrayAdapter adapter = new ArrayAdapter<>(Ausgabe.this,android.R.layout.simple_spinner_item,data);
                 lph_lpa.setAdapter(adapter);
 
 

@@ -27,9 +27,9 @@ public class Eingabe extends AppCompatActivity {
     private List<String> Breite;
 
     private ProgressDialog pDialog;
-    public static final int progress_bar_type = 0;
+    private static final int progress_bar_type = 0;
 
-    private static String file_url = "http://swarcofiles.com/futurit/app/android_database.sqlite";
+    private static final String file_url = "http://swarcofiles.com/futurit/app/android_database.sqlite";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class Eingabe extends AppCompatActivity {
 
                 Laender = mDBHelper.getLaender();
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(Eingabe.this, android.R.layout.simple_spinner_item, Laender);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(Eingabe.this, android.R.layout.simple_spinner_item, Laender);
                 Laenderwahl.setAdapter(adapter);
 
                 Laenderwahl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -67,7 +67,7 @@ public class Eingabe extends AppCompatActivity {
 
                         Laenge = mDBHelper.getLaenge(land);
 
-                        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(Eingabe.this, android.R.layout.simple_spinner_item, Laenge);
+                        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(Eingabe.this, android.R.layout.simple_spinner_item, Laenge);
 
                         Laengenwahl.setAdapter(adapter1);
 
@@ -114,7 +114,7 @@ public class Eingabe extends AppCompatActivity {
                         Breite.toArray(data2);
                         Arrays.sort(data2);
 
-                        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(Eingabe.this, android.R.layout.simple_spinner_item, data2);
+                        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(Eingabe.this, android.R.layout.simple_spinner_item, data2);
 
                         Breitenwahl.setAdapter(adapter2);
 
@@ -131,8 +131,6 @@ public class Eingabe extends AppCompatActivity {
         new DownloadFileFromURL(mHandler).execute(file_url);
 
     }
-
-//    todo Bei Zurueckkehr auf einen der beiden Bildschirme den Stack verkleinern, damit man am Handy mit der ZURUECK-Taste nicht jeden einzelnen Schritt zurueckspringt
 
     //Copy the database from assets
 
@@ -174,10 +172,10 @@ public class Eingabe extends AppCompatActivity {
     /**
      * Background Async Task to download file
      * */
-    class DownloadFileFromURL extends AsyncTask<String, String, String> {
+    private class DownloadFileFromURL extends AsyncTask<String, String, String> {
         private final Handler mHandler;
 
-        public DownloadFileFromURL(Handler mHandler) {
+        private DownloadFileFromURL(Handler mHandler) {
             this.mHandler = mHandler;
         }
 
@@ -210,7 +208,9 @@ public class Eingabe extends AppCompatActivity {
                         8192);
 
 
-                String PATH = "/data/data/" + getApplicationContext().getPackageName() + "/databases/";
+                String PATH = Eingabe.this.getFilesDir().getParent()  + "/databases/";
+                System.out.println(PATH);
+
                 File file = new File(PATH, "android_database.sqlite");
 
                 openOrCreateDatabase("asdf.sqlite",MODE_PRIVATE, null);
