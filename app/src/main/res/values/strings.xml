@@ -7,11 +7,12 @@
     <string name="CrossWalkWidth_prompt_de">Schutzweg Breite wählen</string>
     <string name="CrossWalkWidth_prompt_en">Choose crosswalk width</string>
     <string name="title_ausgabe">Ergebnis</string>
-    <string name="berechnung_button_text">Vorschlag berechnen</string>
+    <string name="berechnung_button_text">>></string>
     <string name="url_zu_datenblatt">https://www.swarco.com/futurit/Produkte/Beleuchtung/Produkte/AREDO/AREDO-L10#tab-58684</string>
     <string name="link_text">Datenblatt anzeigen</string>
     <string name="db_path">/data/data/com.wedenik.fabian.schutwegbeleuchtung/databases/</string>
     <string name="db_name">probedatenbank</string>
+    <string name="impressum_url">https://www.swarco.com/futurit/Impressum</string>
 
 
     <string-array name="country_arrays_de">

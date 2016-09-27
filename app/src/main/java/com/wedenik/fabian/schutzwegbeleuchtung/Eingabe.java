@@ -2,6 +2,7 @@ package com.wedenik.fabian.schutzwegbeleuchtung;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.*;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -267,6 +268,12 @@ public class Eingabe extends AppCompatActivity {
 
         }
 
+    }
+
+    public void show_impressum(View view) {
+        String URL = getResources().getString(R.string.impressum_url);
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
+        startActivity(browserIntent);
     }
 }
 

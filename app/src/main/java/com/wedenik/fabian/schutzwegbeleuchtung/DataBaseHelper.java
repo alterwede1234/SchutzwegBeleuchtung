@@ -184,4 +184,19 @@ public class DataBaseHelper extends SQLiteOpenHelper
         close();
         return URL;
     }
+
+    public ArrayList<String> getUeberhang (String land, String laenge, String breite, String modell, String leuchte, String hoehe){
+        ArrayList<String> ueberhaenge = new ArrayList<>();
+        openDatabase();
+        Cursor cursor = mDataBase.rawQuery("Select * FROM android_metadata WHERE Land='"+land+"' AND Laenge='"+laenge+"' AND Breite='"+breite+"' AND Leuchtenmodell='"+modell+"' AND Leuchte='"+leuchte+"' AND Hoehe='"+hoehe+"'",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            String ueberhang = cursor.getString(7);
+            ueberhaenge.add(ueberhang);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        close();
+        return ueberhaenge;
+    }
 }

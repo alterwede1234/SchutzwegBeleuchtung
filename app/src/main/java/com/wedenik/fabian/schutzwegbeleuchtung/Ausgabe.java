@@ -23,6 +23,12 @@ public class Ausgabe extends AppCompatActivity {
         final String breite = extras.getString("Breite");
         final String land = extras.getString("Land");
 
+        TextView textview_laenge = (TextView) findViewById(R.id.laenge) ;
+        textview_laenge.setText(laenge);
+
+        TextView textview_breite = (TextView) findViewById(R.id.breite) ;
+        textview_breite.setText(breite);
+
         Spinner leuchte = (Spinner) findViewById(R.id.leuchte);
         Spinner lph_lpa = (Spinner) findViewById(R.id.lph_lpa);
         leuchte.setVisibility(View.INVISIBLE);
@@ -117,16 +123,20 @@ public class Ausgabe extends AppCompatActivity {
                 DataBaseHelper mDBHelper = new DataBaseHelper(Ausgabe.this);
                 Spinner leuchtenmodelle = (Spinner) findViewById(R.id.leuchtenmodelle);
                 Spinner leuchte = (Spinner) findViewById(R.id.leuchte);
-                TextView lichtpunkthoehe = (TextView) findViewById(R.id.lichtpunkthoehe);
+                Spinner ueberhang = (Spinner) findViewById(R.id.ueberhang);
                 TextView lichtpunktabstand = (TextView) findViewById(R.id.lichtpunktabstand);
 
                 String modell = leuchtenmodelle.getSelectedItem().toString();
                 String gewaehlte_leuchte = leuchte.getSelectedItem().toString();
 
+                List<String> ueberhaenge = mDBHelper.getUeberhang(land, laenge, breite, modell, gewaehlte_leuchte, hoehe);
+
                 String abstand = mDBHelper.getAbstand(land,laenge,breite, modell, gewaehlte_leuchte, hoehe);
 
-                lichtpunkthoehe.setText(hoehe);
                 lichtpunktabstand.setText(abstand);
+
+                ArrayAdapter adapter = new ArrayAdapter(Ausgabe.this, android.R.layout.simple_spinner_item, ueberhaenge);
+                ueberhang.setAdapter(adapter);
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
